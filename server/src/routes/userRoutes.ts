@@ -144,6 +144,7 @@ userRoutes.post("/signin", async (req: any, res: any) => {
 
 userRoutes.post("/verify-otp", async (req: any, res: any) => {
   try {
+    console.log("Session Data:", req.session.user); // Log the session data
     const {otp} = req.body;
     console.log("otp : "+otp);
     const username = req.session?.user?.data?.username;

@@ -17,7 +17,8 @@ const AuthComp = ({type} : {type: 'signin' | "signup"}) => {
   const SendRequest = async () => {
     try {
         const response  = await axios.post(`${BACKEND_URL}/api/v1/user/${type === 'signin' ? 'signin' : 'signup'}`, postInputs);
-        const success = await response.data;   
+        const success = await response.data;
+        console.log(postInputs.email);   
         if(success){
             navigate("/otp-verification");
         }
@@ -29,7 +30,7 @@ const AuthComp = ({type} : {type: 'signin' | "signup"}) => {
   return <div>
         <LandingPage children={
             <div className="mb-20 flex item-center justify-center">
-            <div className="flex-col px-4 mx-4 w-full max-w-sm">
+            <div className="flex-col px-4 mx-4 w-full max-w-sm ease-in-out hover:scale-105">
                 <div className="flex-col  align-middle p-8 rounded-xl bg-gradient-to-br from-teal-500 via-slate-400 via-red-200 to-cyan-500 opacity-90">
                     <div className="text-3xl font-extrabold flex justify-center">
                         {type === "signin" ? "Login" : "Create an Account"}
@@ -41,13 +42,13 @@ const AuthComp = ({type} : {type: 'signin' | "signup"}) => {
                         </Link>
                     </div>
                     <div className="pt-2">
-                        <LabelledInput label="Username" placeholder="saketpandey" onChange={(e) => {
+                        <LabelledInput label="Username" type='text' placeholder="saketpandey" onChange={(e) => {
                             setPostInputs({
                                 ...postInputs,
                                 username: e.target.value
                             })
                         }} />
-                        <LabelledInput label="Email" placeholder="saketpandey@gmail.com" onChange={(e) => {
+                        <LabelledInput label="Email" type ="email" placeholder="saketpandey@gmail.com" onChange={(e) => {
                             setPostInputs({
                                 ...postInputs,
                                 email: e.target.value
@@ -73,7 +74,7 @@ interface LabelledInputType {
     label: string;
     placeholder: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    type?: string;
+    type?: any;
 }
 
 function LabelledInput({ label, placeholder, onChange, type }: LabelledInputType) {

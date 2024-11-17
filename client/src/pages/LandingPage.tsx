@@ -3,7 +3,7 @@ import Topbar from '../components/Topbar'
 
 export default function LandingPage({children}: {children : React.ReactNode}) {
   return (
-    <div className="min-h-screen bg-emerald-200 from-teal-50 to-cyan-100">
+    <div className="min-h-screen bg-gradient-to-br from-teal-500 via-slate-400 via-black-200 to-cyan-500 opacity-90">
       <header className="container mx-auto px-4 py-6">
         <Topbar/>
       </header>

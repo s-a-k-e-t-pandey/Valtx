@@ -135,6 +135,7 @@ userRoutes.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 userRoutes.post("/verify-otp", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f;
     try {
+        console.log("Session Data:", req.session); // Log the session data
         const { otp } = req.body;
         console.log("otp : " + otp);
         const username = (_c = (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.username;

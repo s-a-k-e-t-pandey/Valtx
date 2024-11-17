@@ -58,13 +58,17 @@ export default function OTPVerification() {
         navigate('/dashboard')
       }, 2000)
     } catch (error: any) {
-        setError('An error occurred during OTP verification. Please try again.')
+        
     }
+
+  }
+  const gotoDashboard = async () => {
+    navigate('/access-vault')
   }
   
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-500 via-slate-600 via-red-400 to-cyan-500 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-teal-500 via-slate-600 via-black-400 to-cyan-500 flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-gradient-to-br from-teal-500 via-slate-400 via-red-200 to-cyan-500 p-10 rounded-xl shadow-2xl transform transition-all duration-500 ease-in-out hover:scale-105">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -92,6 +96,7 @@ export default function OTPVerification() {
               type="submit"
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out transform hover:scale-105"
               disabled={countdown === 0}
+              onClick={gotoDashboard}
             >
               Verify OTP
             </button>
