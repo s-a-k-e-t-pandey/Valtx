@@ -42,19 +42,19 @@ const AuthComp = ({type} : {type: 'signin' | "signup"}) => {
                         </Link>
                     </div>
                     <div className="pt-2">
-                        <LabelledInput label="Username" type='text' placeholder="saketpandey" onChange={(e) => {
+                        <LabelledInput label="Username" type='text' placeholder="saket1234" onChange={(e) => {
                             setPostInputs({
                                 ...postInputs,
                                 username: e.target.value
                             })
                         }} />
-                        <LabelledInput label="Email" type ="email" placeholder="saketpandey@gmail.com" onChange={(e) => {
+                        <LabelledInput label="Email" type ="email" placeholder="saketpandey1234@example.com" onChange={(e) => {
                             setPostInputs({
                                 ...postInputs,
                                 email: e.target.value
                             })
                         }} />
-                        <LabelledInput label="Password" type={"password"} placeholder="123456" onChange={(e) => {
+                        <LabelledInput label="Password" type={"password"} placeholder="password123" onChange={(e) => {
                             setPostInputs({
                                 ...postInputs,
                                 password: e.target.value
@@ -80,7 +80,7 @@ interface LabelledInputType {
 function LabelledInput({ label, placeholder, onChange, type }: LabelledInputType) {
     return <div>
         <label className="block mb-2 text-sm text-black font-semibold pt-4">{label}</label>
-        <input onChange={onChange} type={type || "text"} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
+        <input onChange={onChange} type={type || "text"} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
     </div>
 }
 

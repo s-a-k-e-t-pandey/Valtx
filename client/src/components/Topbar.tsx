@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Topbar() {
 
-    return <div className=" p-4 text-3xl font-extrabold border-solid ">
+    return <div className=" p-4 text-3xl font-extrabold border-solid h-20 bg-gradient-to-br from-teal-500 via-slate-400 via-black-200 to-cyan-500 opacity-90">
         <div className="flex justify-between text-[#0d1117]">
             <div className="flex row text-[#0d1117] shadow border-4 bg-gradient-to-br from-blue-900 via-black to-green-900 opacity-80 shadow-2xl transform transition-all duration-500 ease-in-out hover:scale-105 rounded-xl">
                 <Link to={"/"}>

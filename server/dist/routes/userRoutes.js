@@ -18,6 +18,7 @@ const client_1 = require("@prisma/client");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const crypto_1 = __importDefault(require("crypto"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 const userRoutes = (0, express_1.default)();
 const prisma = new client_1.PrismaClient();
 userRoutes.use(express_1.default.json());
@@ -42,6 +43,16 @@ function encryptAESKeyWithRSA(aesKey) {
 function decryptAESKeyWithRSA(encryptedAESKey) {
     return crypto_1.default.privateDecrypt(rsaPrivateKey, encryptedAESKey);
 }
+const transporter = nodemailer_1.default.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.APP_PASSWORD,
+    },
+});
 userRoutes.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { success } = zod_1.signinInput.safeParse(req.body);
@@ -117,6 +128,14 @@ userRoutes.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             where: { id: user.id },
             data: { otp: encryptedOtp, otpExpires: new Date(Date.now() + 10 * 60 * 1000), iv: iv.toString("hex"), encryptedAesKey: encryptedAesKey.toString("hex") },
         });
+        const mailOptions = {
+            from: process.env.EMAIL_USERNAME,
+            to: user.email,
+            subject: "Your OTP for login",
+            text: `Your OTP is: ${otp}`,
+            html: `<strong>Your OTP is: ${otp}</strong>`,
+        };
+        yield transporter.sendMail(mailOptions);
         req.session.user = { data: { username: user.username, email: user.email } };
         console.log(req.session.user);
         console.log(otp);
@@ -135,7 +154,7 @@ userRoutes.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 userRoutes.post("/verify-otp", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f;
     try {
-        console.log("Session Data:", req.session); // Log the session data
+        console.log("Session Data:", req.session.user); // Log the session data
         const { otp } = req.body;
         console.log("otp : " + otp);
         const username = (_c = (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.username;

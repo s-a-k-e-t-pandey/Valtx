@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 const userRoutes = express();
 const prisma = new PrismaClient();
@@ -38,6 +39,19 @@ function encryptAESKeyWithRSA(aesKey: Buffer): Buffer {
 function decryptAESKeyWithRSA(encryptedAESKey: Buffer): Buffer {
   return crypto.privateDecrypt(rsaPrivateKey, encryptedAESKey);
 }
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.APP_PASSWORD,
+  },
+});
+
 
 
 userRoutes.post("/signup", async (req: any, res: any) => {
@@ -126,9 +140,17 @@ userRoutes.post("/signin", async (req: any, res: any) => {
       data: { otp: encryptedOtp, otpExpires: new Date(Date.now() + 10 * 60 * 1000), iv: iv.toString("hex"), encryptedAesKey: encryptedAesKey.toString("hex") },
     });
 
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: user.email,
+      subject: "Your OTP for login",
+      text: `Your OTP is: ${otp}`,
+      html: `<strong>Your OTP is: ${otp}</strong>`,
+    };
+    await transporter.sendMail(mailOptions);
 
     req.session.user = { data: { username: user.username, email: user.email } };
-    console.log(req.session.user);
+    console.log(req.session.user);    
     console.log(otp);
     return res.status(200).json({
       signin: true,

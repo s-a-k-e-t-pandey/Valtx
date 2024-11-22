@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import OTPVerification from './pages/OTPVerification';
-import VaultPage from './pages/VaultPage';
+import VaultPage from './pages/VaultPage1';
 import LandingPage from './pages/LandingPage';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
